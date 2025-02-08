@@ -1,0 +1,129 @@
+=================================
+               URL
+=================================
+https://www.kaggle.com/datasets/rohanrao/formula-1-world-championship-1950-2020
+
+=================================
+          CREATE TABLE
+=================================
+BEGIN;
+CREATE TABLE IF NOT EXISTS circuits (
+	circuitId SERIAL PRIMARY KEY,
+	circuitRef VARCHAR(20),
+	name VARCHAR(50),
+	location VARCHAR(40),
+	country VARCHAR(40),
+	latitude NUMERIC(9,6),
+	longitude NUMERIC(9,6),
+	altitude INTEGER,
+	url TEXT
+);
+
+
+CREATE TABLE IF NOT EXISTS races (
+	raceId SERIAL PRIMARY KEY,
+	year INT,
+	round INT,
+	circuitId INT REFERENCES circuits(circuitId) ON DELETE SET NULL,
+	name VARCHAR(255),
+	date DATE,
+	time TIME,
+	url TEXT,
+	fp1_date DATE,
+	fp1_time TIME,
+	fp2_date DATE,
+	fp2_time TIME,
+	fp3_date DATE,
+	fp3_time TIME,
+	quali_date DATE,
+	quali_time TIME,
+	sprint_date DATE,
+	sprint_time TIME
+);
+
+CREATE TABLE IF NOT EXISTS constructors (
+	constructorId SERIAL PRIMARY KEY,
+	constructorRef VARCHAR(30),
+	name VARCHAR(30),
+	nationality VARCHAR(30),
+	url TEXT
+);
+
+CREATE TABLE IF NOT EXISTS drivers (
+	driverId SERIAL PRIMARY KEY,
+	driverRef VARCHAR(20),
+	number INTEGER,
+	code VARCHAR(3),
+	forename VARCHAR(50),
+	surname VARCHAR(50),
+	dob DATE,
+	nationality VARCHAR(40),
+	url TEXT
+);
+
+CREATE TABLE IF NOT EXISTS constructor_standings (
+	constructorStandingsId SERIAL PRIMARY KEY,
+	raceId INTEGER REFERENCES races(raceId) ON DELETE SET NULL,
+	constructorId INTEGER REFERENCES constructors(constructorId) ON DELETE SET NULL,
+	points FLOAT,
+	position INTEGER,
+	positionText VARCHAR(5),
+	wins INTEGER
+);
+
+
+CREATE TABLE IF NOT EXISTS driver_standings (
+	driverStandingsId SERIAL PRIMARY KEY,
+	raceId INTEGER REFERENCES races(raceId) ON DELETE SET NULL,
+	driverId INTEGER REFERENCES drivers(driverId) ON DELETE SET NULL,
+	points NUMERIC(5,2), 
+	position INTEGER,
+	positionText VARCHAR(5),
+	wins INTEGER
+);
+
+
+CREATE TABLE IF NOT EXISTS results (
+	resultId SERIAL PRIMARY KEY,
+	raceId INTEGER REFERENCES races(raceId) ON DELETE SET NULL,
+	driverId INTEGER REFERENCES drivers(driverId) ON DELETE SET NULL,
+	constructorId INTEGER REFERENCES constructors(constructorId) ON DELETE SET NULL,
+	number INTEGER,
+	grid INTEGER,
+	position INTEGER,
+	positionText VARCHAR(5),
+	positionOrder INTEGER,
+	points NUMERIC(5,2),
+	laps INTEGER,
+	time VARCHAR(20),
+	milliseconds BIGINT,
+	fastestLap INTEGER,
+	rank INTEGER,
+	fastestLapTime VARCHAR(12),
+	fastestLapSpeed NUMERIC(6,3),
+	statusId INT REFERENCES status(statusid) ON DELETE SET NULL
+);
+COMMIT;
+
+=================================
+          INSERT DATA
+=================================
+
+- I insert data using the psql cmd, since the postgres docker can't "see" my directory
+
+\copy circuits FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/circuits.csv' DELIMITER ',' CSV HEADER;
+
+\copy races FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/races.csv' DELIMITER ',' CSV HEADER;
+
+\copy constructors FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/constructors.csv' DELIMITER ',' CSV HEADER;
+
+\copy drivers FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/drivers.csv' DELIMITER ',' CSV HEADER;
+
+\copy constructor_standings FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/constructor_standings.csv' DELIMITER ',' CSV HEADER;
+
+\copy driver_standings FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/driver_standings.csv' DELIMITER ',' CSV HEADER;
+
+\copy results FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/results.csv' DELIMITER ',' CSV HEADER;
+
+\copy results FROM 'C:/Users/Affan/Hacktiv8/Phase 2/Milestone/p2-ftds024-hck-m3-Baldaric/Dataset/status.csv' DELIMITER ',' CSV HEADER;
+

@@ -1,0 +1,45 @@
+1. Explain what is NoSQL:
+NoSQL is a type of database designed for handling large-scale and flexible data.
+Unlike traditional relational databases (SQL), NoSQL does not use tables with fixed structures.
+Instead, it stores data in different formats like documents, key-value pairs, column families, or graphs.
+NoSQL is great for fast-growing applications, big data, and real-time systems.
+
+2. When should we use NoSQL and Relational Database Management System
+Use NoSQL when:
+ - Data has no fixed structure or changes often.
+ - Need high scalability and fast performance.
+ - Transactions don’t require strict accuracy.
+Use SQL when:
+ - Data has a clear structure and relationships.
+ - The system handles important transactions.
+
+3. Two NoSQL tools (other than ElasticSearch) and their advantages
+
+ - MongoDB (Document-based)
+     - Stores data in JSON-like format (BSON), making it flexible.
+     - Easy to query with a human-readable syntax.
+     - Supports scalability and replication.
+ - Apache Cassandra (Column-based)
+     - Highly available and fault-tolerant (great for large-scale systems).
+     - Fast write operations and scales horizontally.
+
+4. What is Apache Airflow?
+Apache Airflow is a workflow automation tool used to schedule, manage, and monitor data pipelines.
+It organizes tasks in a DAG (Directed Acyclic Graph), ensuring that processes run in order.
+
+5. What is Great Expectations?
+Great Expectations (GE) is a data validation tool that ensures data quality before analysis or processing.
+It allows you to define rules (expectations) for checking if the data is correct, complete, and formatted properly.
+
+6. What is Batch Processing?
+Batch processing is a method where large amounts of data are processed at scheduled intervals instead of in real-time.
+The system collects data first, then processes it all at once.
+
+    Examples of Batch Processing:
+     - Bank transactions – Monthly financial reports are generated at the end of the month.
+     - Big data analysis – Sales data is processed in batches overnight.
+     - Machine learning – Training a model with collected data in scheduled runs.
+    Common Batch Processing Tools:
+     - Apache Hadoop – Handles large-scale batch processing.
+     - Apache Spark (Batch Mode) – Faster batch processing for big data.
+     - SQL Stored Procedures – Used in databases for batch queries.

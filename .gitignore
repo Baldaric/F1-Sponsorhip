@@ -1,0 +1,15 @@
+# Ignore environment files
+.env
+
+# Ignore dataset and logs if not needed in the repository
+Dataset/
+logs/
+
+# Ignore system files (macOS & Windows)
+.DS_Store
+Thumbs.db
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+ 
